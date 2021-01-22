@@ -2,3 +2,4 @@
 /config.dev.php
 /.htpasswd
 /.htaccess
+/samples.sql

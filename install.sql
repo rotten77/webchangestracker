@@ -3,6 +3,36 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP TABLE IF EXISTS `message_log`;
+CREATE TABLE `message_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `message_sent` datetime DEFAULT NULL COMMENT 'Message sent',
+  `message_status` enum('ok','error') COLLATE utf8_czech_ci NOT NULL DEFAULT 'error' COMMENT 'Message status',
+  `message_body` text COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'Message body',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Messages';
+
+
+DROP TABLE IF EXISTS `records`;
+CREATE TABLE `records` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `website_id` int(11) NOT NULL COMMENT 'Website',
+  `occurrence_first` datetime DEFAULT NULL COMMENT 'First occurence',
+  `occurrence_last` datetime DEFAULT NULL COMMENT 'Last occurence',
+  `item_id` text COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'Item ID',
+  `item_1` text COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'Item 1',
+  `item_2` text COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'Item 2',
+  `item_3` text COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'Item 3',
+  `item_4` text COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'Item 4',
+  `item_5` text COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'Item 5',
+  `message_sent` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'Message sent status',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `item_id` (`item_id`(400)),
+  KEY `website_id` (`website_id`),
+  CONSTRAINT `records_ibfk_1` FOREIGN KEY (`website_id`) REFERENCES `website` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Records';
+
+
 DROP TABLE IF EXISTS `website`;
 CREATE TABLE `website` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -22,7 +52,8 @@ CREATE TABLE `website` (
   `message` text COLLATE utf8_czech_ci NOT NULL COMMENT 'Message',
   PRIMARY KEY (`id`),
   KEY `status_id` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Website';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Websites';
+
 
 
 
@@ -44,20 +75,3 @@ OR
 )
 
 ORDER BY FIELD(tracking_priority, 'force_next','shedule'), tracking_last ASC;
-
-
-DROP TABLE IF EXISTS `records`;
-CREATE TABLE `records` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `occurrence_first` datetime DEFAULT NULL,
-  `occurrence_last` datetime DEFAULT NULL,
-  `item_id` text COLLATE utf8_czech_ci DEFAULT NULL,
-  `item_1` text COLLATE utf8_czech_ci DEFAULT NULL,
-  `item_2` text COLLATE utf8_czech_ci DEFAULT NULL,
-  `item_3` text COLLATE utf8_czech_ci DEFAULT NULL,
-  `item_4` text COLLATE utf8_czech_ci DEFAULT NULL,
-  `item_5` text COLLATE utf8_czech_ci DEFAULT NULL,
-  `message_send` tinyint(4) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `item_id` (`item_id`(400))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;

@@ -96,6 +96,19 @@ class App
         return $message;
     }
 
+    function sendHtmlEmail($to, $subject, $message, $headers = "") {
+        $headers = "MIME-Version: 1.0"
+            . PHP_EOL . "Content-Type: text/html; charset=utf-8"
+            . PHP_EOL . "Content-Transfer-Encoding: 8bit"
+            . ($headers ? PHP_EOL . $headers : "")
+        ;
+        // iconv_set_encoding("internal_encoding", "utf-8");
+        ini_set('default_charset', 'UTF-8');
+        $subject = iconv_mime_encode("Subject", $subject);
+        $subject = substr($subject, strLen("Subject: "));
+        return mail($to, $subject, $message, $headers);
+    }
+
 }
 
 $App = new App($db);

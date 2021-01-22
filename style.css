@@ -18,3 +18,9 @@ th {
     padding:6px;
     margin-bottom:12px;
 }
+.preview img {
+    width:100%;
+    max-width:140px;
+    height:100%;
+    max-height:140px;
+}
