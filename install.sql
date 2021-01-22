@@ -41,7 +41,7 @@ CREATE TABLE `website` (
   `status` enum('active','inactive') COLLATE utf8_czech_ci NOT NULL DEFAULT 'active' COMMENT 'Status',
   `tracking_last` datetime DEFAULT NULL COMMENT 'Last tracking datetime',
   `tracking_interval` enum('10m','1h','1d') COLLATE utf8_czech_ci NOT NULL DEFAULT '1h' COMMENT 'Tracking interval',
-  `tracking_priority` enum('shedule','force_next') COLLATE utf8_czech_ci NOT NULL DEFAULT 'shedule' COMMENT 'Tracking priority',
+  `tracking_priority` enum('schedule','force_next') COLLATE utf8_czech_ci NOT NULL DEFAULT 'force_next' COMMENT 'Tracking priority',
   `content_wrapper` varchar(400) COLLATE utf8_czech_ci NOT NULL COMMENT 'Block wrapper',
   `content_id` varchar(400) COLLATE utf8_czech_ci NOT NULL COMMENT 'Content ID',
   `content_item_1` varchar(400) COLLATE utf8_czech_ci NOT NULL COMMENT 'Content item 1',
@@ -65,7 +65,7 @@ AND
 tracking_priority = 'force_next'
 OR
 (
-    tracking_priority = 'shedule' AND
+    tracking_priority = 'schedule' AND
     (
         (tracking_interval='10m' AND tracking_last<(NOW()-INTERVAL 10 MINUTE)) OR
         (tracking_interval='1h' AND tracking_last<(NOW()-INTERVAL 1 HOUR)) OR
@@ -74,4 +74,4 @@ OR
     )
 )
 
-ORDER BY FIELD(tracking_priority, 'force_next','shedule'), tracking_last ASC;
+ORDER BY FIELD(tracking_priority, 'force_next','schedule'), tracking_last ASC;

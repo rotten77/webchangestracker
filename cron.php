@@ -24,7 +24,7 @@ foreach($db->cron_list->limit(10) as $website) {
         );
     }
 
-    $website->update(array('tracking_last' => $now, 'tracking_priority' => 'shedule'));
+    $website->update(array('tracking_last' => $now, 'tracking_priority' => 'schedule'));
 }
 
 # E-mail
@@ -33,7 +33,7 @@ foreach($db->records->where('message_sent=0') as $record) {
 
     $messageBody.=$App->createMessage($record->website['message'], $record);
     $messageBody.=PHP_EOL.PHP_EOL;
-    $messageBody.='<small>zdroj: <a href="'.$record->website['url'].'">'.$record->website['label'].'</a></small>';
+    $messageBody.='<small>source: <a href="'.$record->website['url'].'">'.$record->website['label'].'</a></small>';
     $messageBody.='<hr />';
     $messageBody.=PHP_EOL.PHP_EOL;
 
