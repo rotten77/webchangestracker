@@ -1,0 +1,20 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding:6px;
+}
+
+code {
+    display:inline-block;
+    background: #eee;
+    padding:6px;
+}
+th {
+    font-weight:bold
+}
+.preview {
+    border: 1px solid black;
+    background: #eee;
+    padding:6px;
+    margin-bottom:12px;
+}
