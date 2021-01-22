@@ -6,7 +6,7 @@ include dirname(__FILE__) . "/app/app.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebChangesTracker</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css?v=4">
 </head>
 <body>
 <h1>WebChangesTracker</h1>
@@ -25,6 +25,12 @@ foreach($db->website() as $website) {
 
 <hr />
 <a href="./editor/index.php">Editor</a> &#124;
-<a href="./cron.php">Run tracker manualy</a>
+<?php if(isset($_GET['run'])) { ?>
+    <a href="./">Close tracker</a>
+<hr />
+<iframe src="./cron.php"></iframe>
+<?php } else { ?>
+    <a href="./?run">Run tracker manualy</a>
+<?php } ?>
 </body>
 </html>

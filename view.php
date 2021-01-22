@@ -18,7 +18,7 @@ if($id>0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $website['label']; ?>  &#124; WebChangesTracker</title>
-    <link rel="stylesheet" href="./style.css?v=3">
+    <link rel="stylesheet" href="./style.css?v=4">
 </head>
 <body>
 <h1><?php echo $website['label']; ?></h1>
