@@ -2,16 +2,18 @@
 header("Content-Type: text/plain");
 include dirname(__FILE__) . "/app/app.php";
 
+$log = '';
+
 # Track page
 foreach($db->cron_list->limit(10) as $website) {
-    echo 'Tracking: '.$website['label'].PHP_EOL;
+    $log .= 'Tracking: '.$website['label'].PHP_EOL;
 
     $data = ($App->parseUrl($website['id']));
 
     $now = new NotORM_Literal("NOW()");
     
     foreach($data as $item) {
-        echo '  '.$item['item_id'].PHP_EOL;
+        $log .= '  '.$item['item_id'].PHP_EOL;
         
         $item['website_id'] = $website['id'];
         $item['occurrence_first'] = $now;
@@ -25,6 +27,13 @@ foreach($db->cron_list->limit(10) as $website) {
     }
 
     $website->update(array('tracking_last' => $now, 'tracking_priority' => 'schedule'));
+}
+
+if($log!='') {
+    $messageLog = $db->tracking_log()->insert(array(
+        'tracking_timestamp' => new NotORM_Literal("NOW()"),
+        'tracking_log' => $log
+    ));  
 }
 
 # E-mail
@@ -58,3 +67,7 @@ if($messageBody!="") {
         echo 'ERROR: the message was not sent';
     }
 }
+
+# Clean logs & old records
+$db->exec("CALL `CLEAN_LOG`");
+$db->exec("CALL `CLEAN_RECORDS`");

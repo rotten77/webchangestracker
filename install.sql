@@ -56,6 +56,13 @@ CREATE TABLE `website` (
 
 
 
+DROP TABLE IF EXISTS `tracking_log`;
+CREATE TABLE `tracking_log` (
+  `id` int NOT NULL COMMENT 'ID' AUTO_INCREMENT PRIMARY KEY,
+  `tracking_timestamp` datetime NULL COMMENT 'Timestamp',
+  `tracking_log` text NULL COMMENT 'Log'
+) COMMENT='Tracking log';
+
 
 CREATE OR REPLACE VIEW cron_list AS
 SELECT id,label,tracking_last, tracking_interval, tracking_priority FROM website
@@ -73,5 +80,29 @@ OR
         tracking_last IS NULL
     )
 )
-
 ORDER BY FIELD(tracking_priority, 'force_next','schedule'), tracking_last ASC;
+
+DELIMITER ;;
+DROP PROCEDURE IF EXISTS `CLEAN_LOG`;
+CREATE PROCEDURE `CLEAN_LOG` ()
+BEGIN
+DELETE FROM tracking_log WHERE tracking_timestamp<(CURDATE() - INTERVAL 7 DAY);
+SET @newid=0;
+UPDATE tracking_log SET id=(@newid:=@newid+1) ORDER BY id;
+
+DELETE FROM message_log WHERE message_sent<(CURDATE() - INTERVAL 30 DAY);
+SET @newid=0;
+UPDATE message_log SET id=(@newid:=@newid+1) ORDER BY id;
+
+END;;
+
+
+DELIMITER ;;
+DROP PROCEDURE IF EXISTS `CLEAN_RECORDS`;
+CREATE PROCEDURE `CLEAN_RECORDS` ()
+BEGIN
+DELETE FROM records WHERE occurrence_last<(CURDATE() - INTERVAL 120 DAY);
+SET @newid=0;
+UPDATE records SET id=(@newid:=@newid+1) ORDER BY id;
+
+END;;
