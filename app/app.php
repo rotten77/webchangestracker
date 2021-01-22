@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once dirname(__FILE__) . "/app.debug.php";
 include_once dirname(__FILE__) . "/app.config.php";
 include_once dirname(__FILE__) . "/app.connect.php";

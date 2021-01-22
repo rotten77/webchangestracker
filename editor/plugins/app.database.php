@@ -9,7 +9,7 @@ class AppDatabase {
 		return MYSQL_DB;
 	}
 
-	function login() {
-		return true;
+	function login($login, $password) {
+		return (bool) ($login == EMAIL_ADDRESS && $password == PASSWORD);
 	}
 }

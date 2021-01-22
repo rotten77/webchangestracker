@@ -1,5 +1,8 @@
 <?php
+
+
 include dirname(__FILE__) . "/app/app.php";
+include dirname(__FILE__) . "/app/app.login.php";
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

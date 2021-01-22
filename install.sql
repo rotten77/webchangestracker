@@ -23,3 +23,41 @@ CREATE TABLE `website` (
   PRIMARY KEY (`id`),
   KEY `status_id` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='Website';
+
+
+
+CREATE OR REPLACE VIEW cron_list AS
+SELECT id,label,tracking_last, tracking_interval, tracking_priority FROM website
+WHERE 
+status='active'
+AND
+tracking_priority = 'force_next'
+OR
+(
+    tracking_priority = 'shedule' AND
+    (
+        (tracking_interval='10m' AND tracking_last<(NOW()-INTERVAL 10 MINUTE)) OR
+        (tracking_interval='1h' AND tracking_last<(NOW()-INTERVAL 1 HOUR)) OR
+        (tracking_interval='1d' AND tracking_last<(NOW()-INTERVAL 1 DAY)) OR
+        tracking_last IS NULL
+    )
+)
+
+ORDER BY FIELD(tracking_priority, 'force_next','shedule'), tracking_last ASC;
+
+
+DROP TABLE IF EXISTS `records`;
+CREATE TABLE `records` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `occurrence_first` datetime DEFAULT NULL,
+  `occurrence_last` datetime DEFAULT NULL,
+  `item_id` text COLLATE utf8_czech_ci DEFAULT NULL,
+  `item_1` text COLLATE utf8_czech_ci DEFAULT NULL,
+  `item_2` text COLLATE utf8_czech_ci DEFAULT NULL,
+  `item_3` text COLLATE utf8_czech_ci DEFAULT NULL,
+  `item_4` text COLLATE utf8_czech_ci DEFAULT NULL,
+  `item_5` text COLLATE utf8_czech_ci DEFAULT NULL,
+  `message_send` tinyint(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `item_id` (`item_id`(400))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
