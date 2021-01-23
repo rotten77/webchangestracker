@@ -30,10 +30,13 @@ foreach($db->cron_list->limit(10) as $website) {
 }
 
 if($log!='') {
+    echo $log;
     $messageLog = $db->tracking_log()->insert(array(
         'tracking_timestamp' => new NotORM_Literal("NOW()"),
         'tracking_log' => $log
     ));  
+} else {
+    echo 'No tracking scheduled'.PHP_EOL;
 }
 
 # E-mail
@@ -68,6 +71,7 @@ if($messageBody!="") {
     }
 }
 
-# Clean logs & old records
-$db->exec("CALL `CLEAN_LOG`");
-$db->exec("CALL `CLEAN_RECORDS`");
+# Maintenance
+$db->records()->where("occurrence_last < '".date("Y-m-d H:i:s", strtotime("now - 300 day"))."'")->delete();
+$db->tracking_log()->where("tracking_timestamp < '".date("Y-m-d H:i:s", strtotime("now - 30 day"))."'")->delete();
+$db->message_log()->where("message_sent < '".date("Y-m-d H:i:s", strtotime("now - 30 day"))."'")->delete();

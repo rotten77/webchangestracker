@@ -82,27 +82,8 @@ OR
 )
 ORDER BY FIELD(tracking_priority, 'force_next','schedule'), tracking_last ASC;
 
-DELIMITER ;;
-DROP PROCEDURE IF EXISTS `CLEAN_LOG`;
-CREATE PROCEDURE `CLEAN_LOG` ()
-BEGIN
-DELETE FROM tracking_log WHERE tracking_timestamp<(CURDATE() - INTERVAL 7 DAY);
-SET @newid=0;
-UPDATE tracking_log SET id=(@newid:=@newid+1) ORDER BY id;
-
-DELETE FROM message_log WHERE message_sent<(CURDATE() - INTERVAL 30 DAY);
-SET @newid=0;
-UPDATE message_log SET id=(@newid:=@newid+1) ORDER BY id;
-
-END;;
-
-
-DELIMITER ;;
-DROP PROCEDURE IF EXISTS `CLEAN_RECORDS`;
-CREATE PROCEDURE `CLEAN_RECORDS` ()
-BEGIN
-DELETE FROM records WHERE occurrence_last<(CURDATE() - INTERVAL 120 DAY);
-SET @newid=0;
-UPDATE records SET id=(@newid:=@newid+1) ORDER BY id;
-
-END;;
+ALTER TABLE `website` ADD `default_content_item_1` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 1 (default)';
+ALTER TABLE `website` ADD `default_content_item_2` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 2 (default)';
+ALTER TABLE `website` ADD `default_content_item_3` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 3 (default)';
+ALTER TABLE `website` ADD `default_content_item_4` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 4 (default)';
+ALTER TABLE `website` ADD `default_content_item_5` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 5 (default)';

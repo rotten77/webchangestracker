@@ -57,12 +57,17 @@ class App
 
                 for($i=1; $i<6; $i++) {
 
-                    if($website['content_item_'.$i]!="") {
+                    if(trim($website['content_item_'.$i])!="") {
 
                         if(isset($xpath->query('.' . $website['content_item_'.$i], $item)->item(0)->nodeValue)) {
                             $data[$idx]['item_'.$i] = $xpath->query('.' . $website['content_item_'.$i], $item)->item(0)->nodeValue;
                         } else {
-                            $data[$idx]['item_'.$i] = null;
+                            
+                            if(trim($website['default_content_item_'.$i])!="") {
+                                $data[$idx]['item_'.$i] = $website['default_content_item_'.$i];
+                            } else {
+                                $data[$idx]['item_'.$i] = null;
+                            }
                         }
 
                     } else {
