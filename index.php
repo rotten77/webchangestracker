@@ -1,5 +1,6 @@
 <?php
 include dirname(__FILE__) . "/app/app.php";
+include dirname(__FILE__) . "/app/app.login.php";
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,5 +33,6 @@ foreach($db->website() as $website) {
 <?php } else { ?>
     <a href="./?run">Run tracker manualy</a>
 <?php } ?>
+&#124; <a href="./?logout">Logout</a>
 </body>
 </html>

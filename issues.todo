@@ -8,3 +8,5 @@
 ✔ Log/Records cleaner @done(2021-01-22 20:30)
 ✔ Add default value if item is not available @done(2021-01-23 09:37)
 ✔ Move "cleaner" from procedures into code @done(2021-01-23 09:23)
+✔ Add login protection @done(2021-01-25 07:21)
+☐ Add sender e-mail

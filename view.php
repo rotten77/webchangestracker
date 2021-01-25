@@ -1,5 +1,7 @@
 <?php
 include dirname(__FILE__) . "/app/app.php";
+include dirname(__FILE__) . "/app/app.login.php";
+
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 if($id>0) {

@@ -13,13 +13,18 @@ class App
     }
 
     function getUrlContent($url) {
+
+        // User Agent Examples
+        // Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+        // Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0
+        // Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36 Edg/88.0.705.50
         $options = array(
             CURLOPT_RETURNTRANSFER => true,   // return web page
             CURLOPT_HEADER         => false,  // don't return headers
             CURLOPT_FOLLOWLOCATION => true,   // follow redirects
             CURLOPT_MAXREDIRS      => 10,     // stop after 10 redirects
             CURLOPT_ENCODING       => "",     // handle compressed
-            // CURLOPT_USERAGENT      => "test", // name of client
+            CURLOPT_USERAGENT      => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36", // name of client
             CURLOPT_AUTOREFERER    => true,   // set referrer on redirect
             CURLOPT_CONNECTTIMEOUT => 120,    // time-out on connect
             CURLOPT_TIMEOUT        => 120,    // time-out on response
