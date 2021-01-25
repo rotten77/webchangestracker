@@ -5,3 +5,4 @@ define('MYSQL_USER', '');
 define('MYSQL_PASS', '');
 define('EMAIL_ADDRESS', '');
 define('PASSWORD', '');
+define('EMAIL_SENDER', '');

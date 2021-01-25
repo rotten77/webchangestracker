@@ -65,7 +65,7 @@ if($messageBody!="") {
     $messageHtml='<html><body>';
     $messageHtml.=$messageBody;
     $messageHtml.='</body></html>';
-    if($App->sendHtmlEmail(EMAIL_ADDRESS, 'WebChangesTracker: new records ('.date('Y-m-d H:i').')', $messageHtml)) {
+    if($App->sendHtmlEmail(EMAIL_ADDRESS, 'WebChangesTracker: new records ('.date('Y-m-d H:i').')', $messageHtml, (EMAIL_SENDER!='' ? 'From: ' . EMAIL_SENDER : ''))) {
         echo 'CONFIRMATION: Message sent';
         $messageLog->update(array('message_status' => 'ok'));
     } else {
