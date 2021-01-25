@@ -43,10 +43,12 @@ if($log!='') {
 $messageBody = "";
 foreach($db->records->where('message_sent=0') as $record) {
 
+    // $messageBody.=PHP_EOL.PHP_EOL;
+    $messageBody.='<div>';
     $messageBody.=$App->createMessage($record->website['message'], $record);
-    $messageBody.=PHP_EOL.PHP_EOL;
     $messageBody.='<small>source: <a href="'.$record->website['url'].'">'.$record->website['label'].'</a></small>';
     $messageBody.='<hr />';
+    $messageBody.='</div>';
     $messageBody.=PHP_EOL.PHP_EOL;
 
     $record->update(array('message_sent' => 1));
