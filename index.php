@@ -26,6 +26,7 @@ foreach($db->website() as $website) {
 
 <hr />
 <a href="./editor/index.php">Editor</a> &#124;
+<a href="./?logout">Logout</a> &#124;
 <?php if(isset($_GET['run'])) { ?>
     <a href="./">Close tracker</a>
 <hr />
@@ -33,6 +34,5 @@ foreach($db->website() as $website) {
 <?php } else { ?>
     <a href="./?run">Run tracker manualy</a>
 <?php } ?>
-&#124; <a href="./?logout">Logout</a>
 </body>
 </html>
