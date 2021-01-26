@@ -24,13 +24,8 @@ foreach($db->cron_list->limit(10) as $website) {
         
         if($row) {
             // update occurrence_last if exists
-            $update = $row->update(array("occurrence_last" => $now));
-
-            if($update) {
-                $log .= '  * '.trim(str_replace(PHP_EOL, " ", $item['item_id'])).PHP_EOL;
-            } else {
-                $log .= 'ERROR:  * '.trim(str_replace(PHP_EOL, " ", $item['item_id'])).PHP_EOL;
-            }
+            $row->update(array("occurrence_last" => $now));
+            $log .= '  * '.trim(str_replace(PHP_EOL, " ", $item['item_id'])).PHP_EOL;
         } else {
             // add new
             $item['website_id'] = $website['id'];
