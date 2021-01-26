@@ -64,8 +64,19 @@ CREATE TABLE `tracking_log` (
 ) COMMENT='Tracking log';
 
 
+ALTER TABLE `website` ADD `default_content_item_1` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 1 (default)';
+ALTER TABLE `website` ADD `default_content_item_2` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 2 (default)';
+ALTER TABLE `website` ADD `default_content_item_3` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 3 (default)';
+ALTER TABLE `website` ADD `default_content_item_4` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 4 (default)';
+ALTER TABLE `website` ADD `default_content_item_5` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 5 (default)';
+
+ALTER TABLE `website`
+ADD `content_id_context` enum('global','website') COLLATE 'utf8_czech_ci' NOT NULL DEFAULT 'website' COMMENT 'Content unique ID context' AFTER `content_id`;
+ALTER TABLE `records`
+DROP INDEX `item_id`;
+
 CREATE OR REPLACE VIEW cron_list AS
-SELECT id,label,tracking_last, tracking_interval, tracking_priority FROM website
+SELECT id,label,tracking_last, tracking_interval, tracking_priority, content_id_context FROM website
 WHERE 
 status='active'
 AND
@@ -81,9 +92,3 @@ OR
     )
 )
 ORDER BY FIELD(tracking_priority, 'force_next','schedule'), tracking_last ASC;
-
-ALTER TABLE `website` ADD `default_content_item_1` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 1 (default)';
-ALTER TABLE `website` ADD `default_content_item_2` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 2 (default)';
-ALTER TABLE `website` ADD `default_content_item_3` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 3 (default)';
-ALTER TABLE `website` ADD `default_content_item_4` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 4 (default)';
-ALTER TABLE `website` ADD `default_content_item_5` varchar(400) COLLATE 'utf8_czech_ci' NULL COMMENT 'Content item 5 (default)';

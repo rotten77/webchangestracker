@@ -10,3 +10,4 @@
 ✔ Move "cleaner" from procedures into code @done(2021-01-23 09:23)
 ✔ Add login protection @done(2021-01-25 07:21)
 ✔ Add sender e-mail @done(2021-01-25 08:34)
+✔ Add unique ID context (global or website) @done(2021-01-26 12:27)
