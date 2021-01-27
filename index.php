@@ -25,7 +25,7 @@ foreach($db->website() as $website) {
 </table>
 
 <hr />
-<a href="./editor/index.php">Editor</a> &#124;
+<a href="./editor/index.php?username=<?php echo urlencode(EMAIL_ADDRESS); ?>">Editor</a> &#124;
 <a href="./?logout">Logout</a> &#124;
 <?php if(isset($_GET['run'])) { ?>
     <a href="./">Close tracker</a>
