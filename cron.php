@@ -17,15 +17,42 @@ foreach($db->cron_list->limit(10) as $website) {
         $item['item_id'] = trim($item['item_id']);
         
         // Check if exists
-        $rowWhere = array("item_id" => $item['item_id']);
+        $rowWhere = array();
+        if($website['tracking_type']!='single') $rowWhere['item_id'] = $item['item_id'];
         if($website['content_id_context']=='website') $rowWhere['website_id'] = $website['id'];
-        $row = $db->records($rowWhere)->fetch();
+        $row = $db->records($rowWhere);
+
+        if($website['tracking_type']=='single') {
+            $row = $row->order('occurrence_first DESC');
+            $row = $row->limit(1);
+        }
         
+        $row = $row->fetch();
         
         if($row) {
-            // update occurrence_last if exists
-            $row->update(array("occurrence_last" => $now));
-            $log .= '  * '.trim(str_replace(PHP_EOL, " ", $item['item_id'])).PHP_EOL;
+            // single tracker
+            if($row['item_id']!=$item['item_id']) {
+                // add new
+                $item['website_id'] = $website['id'];
+                $item['occurrence_first'] = $now;
+                $insert = $db->records()->insert($item);
+
+                if($insert) {
+                    $log .= '  + '.trim(str_replace(PHP_EOL, " ", $item['item_id'])).PHP_EOL;
+                } else {
+                    $log .= 'ERROR:  + '.trim(str_replace(PHP_EOL, " ", $item['item_id'])).PHP_EOL;
+                }
+
+            } else {
+                // update occurrence_last if exists
+                $update =$row->update(array("occurrence_last" => $now, "occurrence_count" => $row["occurrence_count"]+1));
+                if($update) {
+                    $log .= '  * '.trim(str_replace(PHP_EOL, " ", $item['item_id'])).PHP_EOL;
+                } else {
+                    $log .= 'ERROR:  * '.trim(str_replace(PHP_EOL, " ", $item['item_id'])).PHP_EOL;
+                }
+                
+            }
         } else {
             // add new
             $item['website_id'] = $website['id'];

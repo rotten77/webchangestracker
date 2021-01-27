@@ -75,8 +75,20 @@ ADD `content_id_context` enum('global','website') COLLATE 'utf8_czech_ci' NOT NU
 ALTER TABLE `records`
 DROP INDEX `item_id`;
 
+
+
+ALTER TABLE `website`
+ADD `tracking_type` enum('single','multiple') COLLATE 'utf8_czech_ci' NOT NULL DEFAULT 'multiple' COMMENT 'Tracking type' AFTER `tracking_priority`;
+
+ALTER TABLE `records`
+ADD `occurrence_count` int NULL COMMENT 'Occurence count' AFTER `occurrence_last`;
+ALTER TABLE `records`
+CHANGE `occurrence_count` `occurrence_count` int(11) NULL DEFAULT '1' COMMENT 'Occurence count' AFTER `occurrence_last`;
+
+-- ===================================================
+
 CREATE OR REPLACE VIEW cron_list AS
-SELECT id,label,tracking_last, tracking_interval, tracking_priority, content_id_context FROM website
+SELECT id,label,tracking_last, tracking_interval, tracking_priority, content_id_context, tracking_type FROM website
 WHERE 
 status='active'
 AND
@@ -92,3 +104,4 @@ OR
     )
 )
 ORDER BY FIELD(tracking_priority, 'force_next','schedule'), tracking_last ASC;
+
