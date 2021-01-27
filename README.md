@@ -21,6 +21,9 @@ Simple PHP app for tracking changes on websites. Sends e-mail notifications.
 * `Tracking priority`
     * `schedule` - page will be tracked within scheduled jobs
     * `force_next` - page will be tracked within next cron job, then is switched back to `schedule`
+* `Tracking type`
+    * `single` - track only one single element on page (e.g. heading of page)
+    * `multiple` - track multiple elements (e.g. blog posts)
 
 ## Tracked content
 
@@ -28,7 +31,11 @@ Use XPath to define tracked parts of page.
 
 * `Block wrapper` - main wrapper of tracked block
 * `Content ID` - unique part inside of wrapper which will be used as identifier for tracked record, that means that any other record with same value will be skipped
+* `Content unique ID context`
+    * `global` - ID is checked against all records (e.g. if you use multiple trackers for one domain)
+    * `website` - ID is checked only against other website's IDs
 * `Content item #` - content parts that will be used in notification message
+* `Default content item #` - placeholder for missing item
 
 **Example:**
 
@@ -61,3 +68,6 @@ You can pass content ID & items by `{id}`, `{1-5}` values:
     <h4><a href="{id}">{1}</a></h4>
     <p>{2}</p>
     <img src="{3}" />
+
+<hr />
+<small>Favicon by Icojam: https://www.iconfinder.com/iconsets/materia-flat-halloween-free</small>
