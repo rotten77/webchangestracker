@@ -7,7 +7,7 @@ Simple PHP app for tracking changes on websites. Sends e-mail notifications.
 1. Go to app URL
 1. Open Editor
 1. Go to `Websites` table and click **New item**
-1. Set cron for executing eah 10 minutes (`cron.php`)
+1. Set cron for executing each 10 minutes (`cron.php`)
 
 ## New item
 
