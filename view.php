@@ -24,6 +24,7 @@ if($id>0) {
 </head>
 <body>
 <h1><?php echo $website['label']; ?></h1>
+<h3><a href="<?php echo $website['url']; ?>"><?php echo $website['url']; ?></a></h3>
 <p><a href="./">&laquo; back</a></p>
 <table>
     <thead>

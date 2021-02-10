@@ -13,11 +13,14 @@ include dirname(__FILE__) . "/app/app.login.php";
 <h1>WebChangesTracker</h1>
 <table>
 <tbody>
+
 <?php
 foreach($db->website() as $website) {
     echo '<tr>';
     echo '      <td><b>'.$website['label'].'</b></td>';
+    echo '      <td><a href="'.$website['url'].'">Open</a></td>';
     echo '      <td><a href="./view.php?id='.$website['id'].'">Preview</a></td>';
+    echo '      <td><a href="./editor/index.php?username='.urlencode(EMAIL_ADDRESS).'&amp;edit=website&amp;'.urlencode('where[id]').'='.$website['id'].'">Edit</a></td>';
     echo '</tr>';
 }
 ?>
