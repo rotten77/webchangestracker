@@ -85,6 +85,10 @@ ADD `occurrence_count` int NULL COMMENT 'Occurence count' AFTER `occurrence_last
 ALTER TABLE `records`
 CHANGE `occurrence_count` `occurrence_count` int(11) NULL DEFAULT '1' COMMENT 'Occurence count' AFTER `occurrence_last`;
 
+
+ALTER TABLE `website`
+CHANGE `tracking_interval` `tracking_interval` enum('10m','1h','3h','1d') COLLATE 'utf8_czech_ci' NOT NULL DEFAULT '1h' COMMENT 'Tracking interval' AFTER `tracking_last`;
+
 -- ===================================================
 
 CREATE OR REPLACE VIEW cron_list AS
@@ -97,9 +101,10 @@ OR
 (
     tracking_priority = 'schedule' AND
     (
-        (tracking_interval='10m' AND tracking_last<(NOW()-INTERVAL 10 MINUTE)) OR
-        (tracking_interval='1h' AND tracking_last<(NOW()-INTERVAL 1 HOUR)) OR
-        (tracking_interval='1d' AND tracking_last<(NOW()-INTERVAL 1 DAY)) OR
+        (tracking_interval='10m' AND tracking_last<(NOW()-INTERVAL 9 MINUTE)) OR
+        (tracking_interval='1h' AND tracking_last<(NOW()-INTERVAL 55 MINUTE)) OR
+        (tracking_interval='3h' AND tracking_last<(NOW()-INTERVAL 175 MINUTE)) OR
+        (tracking_interval='1d' AND tracking_last<(NOW()-INTERVAL 1435 MINUTE)) OR
         tracking_last IS NULL
     )
 )
