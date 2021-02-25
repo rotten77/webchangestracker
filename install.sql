@@ -96,17 +96,19 @@ SELECT id,label,tracking_last, tracking_interval, tracking_priority, content_id_
 WHERE 
 status='active'
 AND
-tracking_priority = 'force_next'
-OR
 (
-    tracking_priority = 'schedule' AND
-    (
-        (tracking_interval='10m' AND tracking_last<(NOW()-INTERVAL 9 MINUTE)) OR
-        (tracking_interval='1h' AND tracking_last<(NOW()-INTERVAL 55 MINUTE)) OR
-        (tracking_interval='3h' AND tracking_last<(NOW()-INTERVAL 175 MINUTE)) OR
-        (tracking_interval='1d' AND tracking_last<(NOW()-INTERVAL 1435 MINUTE)) OR
-        tracking_last IS NULL
-    )
+  tracking_priority = 'force_next'
+  OR
+  (
+      tracking_priority = 'schedule' AND
+      (
+          (tracking_interval='10m' AND tracking_last<(NOW()-INTERVAL 9 MINUTE)) OR
+          (tracking_interval='1h' AND tracking_last<(NOW()-INTERVAL 55 MINUTE)) OR
+          (tracking_interval='3h' AND tracking_last<(NOW()-INTERVAL 175 MINUTE)) OR
+          (tracking_interval='1d' AND tracking_last<(NOW()-INTERVAL 1435 MINUTE)) OR
+          tracking_last IS NULL
+      )
+  )
 )
 ORDER BY FIELD(tracking_priority, 'force_next','schedule'), tracking_last ASC;
 
