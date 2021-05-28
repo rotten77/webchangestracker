@@ -89,6 +89,18 @@ CHANGE `occurrence_count` `occurrence_count` int(11) NULL DEFAULT '1' COMMENT 'O
 ALTER TABLE `website`
 CHANGE `tracking_interval` `tracking_interval` enum('10m','1h','3h','1d') COLLATE 'utf8_czech_ci' NOT NULL DEFAULT '1h' COMMENT 'Tracking interval' AFTER `tracking_last`;
 
+
+CREATE TABLE `folder` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(120) NOT NULL
+) COLLATE 'utf8_czech_ci';
+
+ALTER TABLE `website`
+ADD `folder_id` int(11) NULL AFTER `label`,
+ADD FOREIGN KEY (`folder_id`) REFERENCES `folder` (`id`);
+ALTER TABLE `website`
+CHANGE `folder_id` `folder_id` int(11) NULL COMMENT 'Folder' AFTER `label`;
+
 -- ===================================================
 
 CREATE OR REPLACE VIEW cron_list AS
