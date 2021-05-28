@@ -11,7 +11,7 @@ $limit = isset($_GET['limit']) ? $_GET['limit'] : 20;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Records  &#124; WebChangesTracker</title>
-    <link rel="stylesheet" href="./style.css?v=6">
+    <link rel="stylesheet" href="./style.css?v=7">
 </head>
 <body>
 <h1>Records</h1>

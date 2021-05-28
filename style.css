@@ -39,6 +39,9 @@ iframe {
     height:400px;
     border:1px solid black;
 }
-input[type="checkbox"] {
+input[type="checkbox"],
+label,
+input[type="button"],
+input[type="submit"] {
     cursor: pointer
 }
