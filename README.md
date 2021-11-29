@@ -13,10 +13,12 @@ Simple PHP app for tracking changes on websites. Sends e-mail notifications.
 
 * `ID` - leave out empty, will be filled automatically
 * `Label` - name, label or your note
+* `Folder` - folder
 * `Status` - active/inactive
 * `Tracking interval`
     * `10m` - each 10 minutes
     * `1h` - hourly
+    * `3h` - every 3 hours
     * `1d` - daily
 * `Tracking priority`
     * `schedule` - page will be tracked within scheduled jobs
