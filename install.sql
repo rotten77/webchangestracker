@@ -101,6 +101,9 @@ ADD FOREIGN KEY (`folder_id`) REFERENCES `folder` (`id`);
 ALTER TABLE `website`
 CHANGE `folder_id` `folder_id` int(11) NULL COMMENT 'Folder' AFTER `label`;
 
+ALTER TABLE `folder`
+COMMENT='Folder';
+
 -- ===================================================
 
 CREATE OR REPLACE VIEW cron_list AS
