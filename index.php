@@ -12,6 +12,12 @@ if(!isset($_POST['filter_send'])) {
     $filter_inactive = false;
 }
 
+if(isset($_GET['deactivate'])) {
+    $deactivate = intval($_GET['deactivate']);
+    $db->website[$deactivate]->update(array('status' => 'inactive'));
+    header("Location: ./");
+}
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

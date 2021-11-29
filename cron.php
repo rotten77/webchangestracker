@@ -90,7 +90,7 @@ foreach($db->records->where('message_sent=0') as $record) {
     $messageBody.='<div>';
     $messageBody.=$App->createMessage($record->website['message'], $record);
     $messageBody.='</div>';
-    $messageBody.='<small>source: <a href="'.$record->website['url'].'">'.$record->website['label'].'</a></small>';
+    $messageBody.='<small>source: <a href="'.$record->website['url'].'">'.$record->website['label'].'</a> &#124; <a href="'.APP_URL.'?deactivate='.$record->website['id'].'">deactivate</a></small>';
     $messageBody.='<hr />';
     $messageBody.='</div>';
     $messageBody.=PHP_EOL.PHP_EOL;
